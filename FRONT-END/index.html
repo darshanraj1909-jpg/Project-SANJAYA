@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedSentry — Dual-Model Edge Monitoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-container">
+    <img src="image.jpg" alt="" class="bg-dynamic">
+  </div>
+
+  <div class="app">
+    <header class="top">
+      <div class="top-row">
+        <div class="brand">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 7 4-14 2 7h6"/></svg>
+          </div>
+          <div class="brand-text">
+            <h1>SANJAYA</h1>
+            <p>Dual-model edge monitoring · Raspberry Pi 5</p>
+          </div>
+        </div>
+        <div class="top-meta">
+          <div class="conn"><span class="conn-dot" id="connDot"></span><span id="connText">Connecting…</span></div>
+          <div class="clock" id="clock">--:--:--</div>
+        </div>
+      </div>
+      <div class="ecg-wrap" aria-hidden="true">
+        <svg viewBox="0 0 800 60" preserveAspectRatio="none">
+          <path d="M0,30 L120,30 L140,10 L155,50 L170,30 L300,30 L320,10 L335,50 L350,30 L480,30 L500,10 L515,50 L530,30 L660,30 L680,10 L695,50 L710,30 L800,30
+                   M800,30 L920,30 L940,10 L955,50 L970,30 L1100,30 L1120,10 L1135,50 L1150,30 L1280,30 L1300,10 L1315,50 L1330,30 L1460,30 L1480,10 L1495,50 L1510,30 L1600,30"/>
+        </svg>
+      </div>
+    </header>
+
+    <section class="banner offline" id="banner">
+      <div class="banner-icon" id="bannerIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4M12 16h.01M10.3 3.86l-8.2 14.2A1.5 1.5 0 0 0 3.5 20h17a1.5 1.5 0 0 0 1.4-1.94L13.7 3.86a1.5 1.5 0 0 0-2.4 0Z"/></svg>
+      </div>
+      <div class="banner-text">
+        <h2 id="bannerTitle">Waiting for connection…</h2>
+        <p id="bannerSub">No data received yet from the sentry node.</p>
+      </div>
+      <button class="demo-btn" id="demoBtn" type="button">Preview with demo data</button>
+      <div class="banner-time" id="bannerTime" style="display:none;"></div>
+    </section>
+
+    <section class="grid">
+      <div class="card video-card">
+        <div class="card-head">
+          <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+          <h3>Video Model</h3>
+          <span class="pill offline" id="videoPill">Offline</span>
+        </div>
+        <div class="sense-row">
+          <div class="ring">
+            <div class="ripple"></div><div class="ripple d2"></div>
+            <div class="ring-core scanning" id="videoRingCore">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            </div>
+          </div>
+          <div class="sense-readout">
+            <div class="label-lg offline" id="videoLabel">NO SIGNAL</div>
+            <div class="sub-label" id="videoSub">Awaiting first frame from sentry node</div>
+            <div class="confbar-wrap">
+              <div class="confbar-top"><span>Confidence</span><span id="videoConfNum">—</span></div>
+              <div class="confbar"><div id="videoConfBar" style="width:0%;"></div></div>
+            </div>
+          </div>
+        </div>
+            <div class="video-preview">
+              <img id="videoFeed" alt="Video feed from sentry node" src="" style="width:100%;height:auto;border-radius:8px;margin-top:12px;display:none;" />
+            </div>
+        <div class="card-foot"><span>Engine: <span id="videoEngine">—</span></span><span id="videoUpdated">updated —</span></div>
+      </div>
+
+      <div class="card audio-card">
+        <div class="card-head">
+          <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg></div>
+          <h3>Audio Model</h3>
+          <span class="pill offline" id="audioPill">Offline</span>
+        </div>
+        <div class="sense-row">
+          <div class="ring">
+            <div class="ripple"></div><div class="ripple d2"></div>
+            <div class="ring-core scanning" id="audioRingCore">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
+            </div>
+          </div>
+          <div class="sense-readout">
+            <div class="label-lg offline" id="audioLabel">NO SIGNAL</div>
+            <div class="sub-label" id="audioSub">Awaiting first audio window from sentry node</div>
+            <div class="confbar-wrap">
+              <div class="confbar-top"><span>Confidence</span><span id="audioConfNum">—</span></div>
+              <div class="confbar"><div id="audioConfBar" style="width:0%;"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="wave" id="wave"></div>
+        <div class="audio-output-panel" id="audioOutputPanel">
+          <div class="audio-output-label">Audio output</div>
+          <div class="audio-output-value" id="audioOutputValue">Waiting for audio data…</div>
+          <div class="audio-output-meta" id="audioOutputMeta">No response from the audio service yet.</div>
+        </div>
+        <div class="card-foot"><span>Engine: <span id="audioEngine">—</span></span><span id="audioUpdated">updated —</span></div>
+      </div>
+    </section>
+
+    <section class="events">
+      <div class="events-head"><h3>Recent Events</h3><span id="eventsMeta">0 logged</span></div>
+      <div class="events-list" id="eventsList">
+        <div class="events-empty" id="eventsEmpty">No events yet — this list fills in as classifications change.</div>
+      </div>
+    </section>
+
+    <footer>
+      <span><b>Node</b> <span id="nodeId">—</span></span>
+      <span><b>API</b> <span id="apiUrlText"></span></span>
+      <span><b>Poll interval</b> <span id="pollText"></span></span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
